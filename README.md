@@ -1,4 +1,2 @@
-# DIG4715-ArcticAlienation
-Group Project 1 for Game Production DIG 4715
-
-This build contains a basic level layout as well as a mannequin and character controller that should be removed once we have ours made.
+Please go to our Google Doc to see our plans and concept art for our gaurd "Ningen"
+https://docs.google.com/document/d/1dT8lYJVji4Gv7btn3B2sUiveB3c9do97UtY4Z11q-SA/edit?usp=sharing
