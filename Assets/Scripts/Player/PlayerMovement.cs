@@ -141,6 +141,7 @@ public class PlayerMovement : MonoBehaviour
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
 
+        /*
         // when to jump
         if(Input.GetKey(jumpKey) && readyToJump && grounded)
         {
@@ -150,6 +151,7 @@ public class PlayerMovement : MonoBehaviour
 
             Invoke(nameof(ResetJump), jumpCD);
         }
+        */
         // when to crouch
         if (Input.GetKey(crouchKey))
         {
@@ -170,13 +172,13 @@ public class PlayerMovement : MonoBehaviour
             hasAppliedForce = false;
 
         }
-        
+        /*
         // when to slide
         if (Input.GetKey(crouchKey) && (horizontalInput != 0 || verticalInput != 0) && (state == MovementState.sprinting || rb.linearVelocity.magnitude > walkSpeed) && !sliding)
         {
             StartSlide();
         }
-        
+        */
     }
 
     private void StateHandler()
