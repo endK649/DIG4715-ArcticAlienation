@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FirstPersonCem : MonoBehaviour
+public class FirstPersonCam : MonoBehaviour
 {
     [Header("References")]
     public float sensX;
