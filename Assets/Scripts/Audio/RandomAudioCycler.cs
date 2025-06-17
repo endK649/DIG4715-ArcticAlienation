@@ -14,7 +14,7 @@ public class RandomAudioCycler : MonoBehaviour
     {
         if (clips.Length == 0)
         {
-            Debug.LogWarning("No audio clips assigned!");
+            // Debug.LogWarning("No audio clips assigned!");
             return;
         }
 
@@ -33,7 +33,7 @@ public class RandomAudioCycler : MonoBehaviour
 
         lastPlayed = selected;
         source.PlayOneShot(selected);
-        Debug.Log("Random clip played: " + selected.name);
+        // Debug.Log("Random clip played: " + selected.name);
     }
     void Start()
     {

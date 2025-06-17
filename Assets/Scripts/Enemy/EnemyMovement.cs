@@ -70,6 +70,7 @@ public class EnemyMovement : MonoBehaviour
         }
         if (playerDetected && chasingPlayer)
         {
+            PlayFootstepIfMoved();
             ChasePlayer();
         }
         PlayFootstepIfMoved();
@@ -83,10 +84,10 @@ public class EnemyMovement : MonoBehaviour
     private IEnumerator HesitateBeforeChasing()
     {
         isPatroling = false;
-        Debug.Log($"Hesitating before chasing for {reactTime} seconds...");
+        // Debug.Log($"Hesitating before chasing for {reactTime} seconds...");
         yield return new WaitForSeconds(GenerateRandomInt(reactTime));
 
-        Debug.Log("Chase initiated!");
+        // Debug.Log("Chase initiated!");
         chasingPlayer = true; // Set chase state AFTER hesitation delay
         
     }
@@ -97,9 +98,9 @@ public class EnemyMovement : MonoBehaviour
     /// </summary>
     private IEnumerator HesitateBeforeResumingPatrol()
     {
-        Debug.Log($"Hesitating before resuming patrol for 3 seconds...");
+        // Debug.Log($"Hesitating before resuming patrol for 3 seconds...");
         yield return new WaitForSeconds(3);
-        Debug.Log("Hesitation over. Returning to patrol...");
+        // Debug.Log("Hesitation over. Returning to patrol...");
         StartCoroutine(ReturnToPatrolAfterDelay());
     }
 
@@ -108,9 +109,9 @@ public class EnemyMovement : MonoBehaviour
     /// </summary>
     private IEnumerator ReturnToPatrolAfterDelay()
     {
-        Debug.Log("Final delay before patrol restart: 2 seconds...");
+        // Debug.Log("Final delay before patrol restart: 2 seconds...");
         yield return new WaitForSeconds(2f);
-        Debug.Log("Resuming patrol.");
+        //Debug.Log("Resuming patrol.");
         isPatroling = true;
         StartPatrolling();
     }
