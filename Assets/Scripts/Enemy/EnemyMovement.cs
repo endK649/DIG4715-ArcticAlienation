@@ -29,11 +29,14 @@ public class EnemyMovement : MonoBehaviour
 
     // Footstep Audio
     [SerializeField] private AudioSource AudioSource;
+    [SerializeField] private AudioSource VocalAudioSource;
+
     [SerializeField] private AudioClip stepClip;
 
     // Growl and Roar
     [SerializeField] private AudioClip roarClip;
     [SerializeField] private AudioClip growlClip;
+    private bool hasRoared = false;
 
     private Vector3 lastStepPosition;
     [SerializeField] private float stepDistanceThreshold = 1.5f; // Tune this to match stride size
@@ -53,7 +56,7 @@ public class EnemyMovement : MonoBehaviour
     {
         if (playerDetected && !chasingPlayer && isPatroling) // Transition to chase mode only once
         {
-            AudioSource.PlayOneShot(growlClip);
+            VocalAudioSource.PlayOneShot(growlClip);
             StopAllCoroutines(); // Prevents stacked behaviors
             StopPatrolling(); // Halt movement immediately
             StartCoroutine(HesitateBeforeChasing()); // Adds hesitation before chasing
@@ -154,7 +157,12 @@ public class EnemyMovement : MonoBehaviour
     private void ChasePlayer()
     {
         agent.isStopped = false;
-        AudioSource.PlayOneShot(roarClip);
+        if (!hasRoared)
+        {
+            VocalAudioSource.PlayOneShot(roarClip);
+            hasRoared = true;
+        }
+
         agent.SetDestination(player.transform.position);
     }
 
