@@ -1,38 +1,62 @@
 using System.Collections;
 using System.Collections.Generic;
+using Cinemachine;
 using UnityEngine;
 
-public class FirstPersonCem : MonoBehaviour
+[RequireComponent(typeof(CharacterController))]
+public class FirstPersonCam : MonoBehaviour
 {
-    [Header("References")]
-    public float sensX;
-    public float sensY;
+    [Header("Components")]
+    [SerializeField] CinemachineFreeLook fpCamera;
+    [SerializeField] CharacterController characterController;
 
-    public Transform orientation;
+    [Header("Input")]
+    public Vector2 LookInput;
 
-    float xRotation;
-    float yRotation;
+    [Header("Looking Parameters")]
+    public Vector2 LookSens = new Vector2(0.1f, 0.1f);
 
+    public float PitchLimit = 85f;
 
-    // Use MoveCamera script in conjunction with this one
-    private void Start()
+    [SerializeField] float currentPitch = 0f;
+
+    public float CurrentPitch
     {
-        Cursor.lockState = CursorLockMode.Locked; // Locks cursor in place
-        Cursor.visible = false; // Makes cursor invisible
+        get => currentPitch;
+
+        set
+        {
+            currentPitch = Mathf.Clamp(value, -PitchLimit, PitchLimit);
+        }
     }
-    void Update()
+
+    #region Unity Methods
+    private void OnValidate()
     {
-        // get mouse input
-        float mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * sensX;
-        float mouseY = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * sensY;
+        if (characterController == null)
+        {
+            characterController = GetComponent<CharacterController>();
+        }
+    }
 
-        yRotation += mouseX;
+    #endregion
 
-        xRotation -= mouseY;
-        xRotation = Mathf.Clamp(xRotation, -90f, 90f);
+    private void Update()
+    {
+        LookInput = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
 
-        // rotate cam and orientation
-        transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
-        orientation.rotation = Quaternion.Euler(0, yRotation, 0);
+        LookUpdate();
+    }
+
+    void LookUpdate()
+    {
+        Vector2 input = new Vector2(LookInput.x * LookSens.x, LookInput.y * LookSens.y);
+        // Looking up and down
+        CurrentPitch -= input.y;
+
+        fpCamera.transform.localRotation = Quaternion.Euler(CurrentPitch, 0f, 0f);
+
+        // Looking left and right
+        transform.Rotate(Vector3.up * input.x);
     }
 }
