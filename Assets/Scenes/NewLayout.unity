@@ -1567,6 +1567,10 @@ PrefabInstance:
       propertyPath: m_FollowOffset.z
       value: -3
       objectReference: {fileID: 0}
+    - target: {fileID: 6173333403958022744, guid: 4a3d7d2f834792746bd5688db53574cf, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7138728743840156304, guid: 4a3d7d2f834792746bd5688db53574cf, type: 3}
       propertyPath: m_Name
       value: MannyTheManequin
@@ -8470,7 +8474,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.417
   m_Pitch: 1
   Loop: 0
   Mute: 0
