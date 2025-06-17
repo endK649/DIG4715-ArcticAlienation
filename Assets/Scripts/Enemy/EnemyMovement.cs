@@ -27,6 +27,18 @@ public class EnemyMovement : MonoBehaviour
     // Rotation parameters for turning toward the player
     [SerializeField] private float rotationSpeed = 5f; // Adjust rotation speed
 
+    // Footstep Audio
+    [SerializeField] private AudioSource AudioSource;
+    [SerializeField] private AudioClip stepClip;
+
+    // Growl and Roar
+    [SerializeField] private AudioClip roarClip;
+    [SerializeField] private AudioClip growlClip;
+
+    private Vector3 lastStepPosition;
+    [SerializeField] private float stepDistanceThreshold = 1.5f; // Tune this to match stride size
+
+
     private void Start()
     {
         // Initialize the NavMeshAgent and set the first patrol point
@@ -41,6 +53,7 @@ public class EnemyMovement : MonoBehaviour
     {
         if (playerDetected && !chasingPlayer && isPatroling) // Transition to chase mode only once
         {
+            AudioSource.PlayOneShot(growlClip);
             StopAllCoroutines(); // Prevents stacked behaviors
             StopPatrolling(); // Halt movement immediately
             StartCoroutine(HesitateBeforeChasing()); // Adds hesitation before chasing
@@ -59,6 +72,9 @@ public class EnemyMovement : MonoBehaviour
         {
             ChasePlayer();
         }
+        PlayFootstepIfMoved();
+
+
     }
 
     /// <summary>
@@ -137,6 +153,7 @@ public class EnemyMovement : MonoBehaviour
     private void ChasePlayer()
     {
         agent.isStopped = false;
+        AudioSource.PlayOneShot(roarClip);
         agent.SetDestination(player.transform.position);
     }
 
@@ -178,5 +195,15 @@ public class EnemyMovement : MonoBehaviour
     {
         return Random.Range(1, reactTime); // Unity's built-in random generator
     }
+    void PlayFootstepIfMoved()
+    {
+        float distanceMoved = Vector3.Distance(transform.position, lastStepPosition);
+        if (distanceMoved >= stepDistanceThreshold)
+        {
+            AudioSource.PlayOneShot(stepClip);
+            lastStepPosition = transform.position;
+        }
+    }
+
 
 }
